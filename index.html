@@ -279,39 +279,40 @@
                 </div>
                 <div class="contact_head">
                 <h2>Looking forward to working or collaboration opportunities</h2>
-                </div>
-                <div class="contact_container">
-                    <div class="contact_content">
-                        <div class="contact_box">
-                            <i class="ri-mail-fill"></i>
-                            <div class="box_info">
-                                <p>Email</p>
-                                <h2>lcy20050603@gmail.com</h2>
-                            </div>
-                        </div> 
-                        <div class="inputs">
-                            <input type="text" placeholder="Your Name" id="mail">
-                            <input type="text" placeholder="Your Subject">
-                        </div>
-                    </div>
-                    <div class="contact_content">
-                        <div class="contact_box">
-                            <i class="ri-phone-fill"></i>
-                            <div class="box_info">
-                                <p>Phone</p>
-                                <h2>(+852) 51125796</h2>
+                </div> 
+                <form  class = "contact_form" action="https://formspree.io/f/xzdbblkb" method="post">
+                    <div class="contact_container">
+                        <div class="contact_content">
+                            <div class="contact_box">
+                                <i class="ri-mail-fill"></i>
+                                <div class="box_info">
+                                    <p>Email</p>
+                                    <h2>lcy20050603@gmail.com</h2>
+                                </div>
+                            </div> 
+                            <div class="inputs">
+                                <input type="text" placeholder="Your Name" name="name" required>
+                                <input type="text" placeholder="Your Subject" name="subject" required>
                             </div>
                         </div>
-                        <div class="inputs">
-                            <input type="email" placeholder="Your Email">
-                            <input type="text" placeholder="Your Message">
+                        <div class="contact_content">
+                            <div class="contact_box">
+                                <i class="ri-phone-fill"></i>
+                                <div class="box_info">
+                                    <p>Phone</p>
+                                    <h2>(+852) 51125796</h2>
+                                </div>
+                            </div>
+                            <div class="inputs">
+                                <input type="email" placeholder="Your Email" name="email" required>
+                                <input type="text" placeholder="Your Message" name='message' required>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="submit_btn">
-                    <button>Submit Now</button>
-                </div>
-                
+                    <div class="submit_btn">
+                        <button type="submit">Submit Now</button>
+                    </div>
+                </form>
             </section>
         </main>
     </div>
