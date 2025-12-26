@@ -50,7 +50,7 @@ section{
     /* justify-content: flex-start;
     align-items: flex-start; */
     justify-content: center;
-    align-items: stretch;
+    align-items: flex;
     margin-left: 5%;
     margin-right:5%;
     width: 80vw;
@@ -215,6 +215,7 @@ main{
     /* position: relative; */
     background-color: rgb(175, 172, 172);
     overflow-y:scroll;
+    min-height: 100vh;
 }
 main::-webkit-scrollbar{
     width:5px;
@@ -653,6 +654,8 @@ section{
 
 .contact{
     flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 0;
 }
 .contact_head {
     width:100%;
