@@ -1,5 +1,5 @@
 var typed2 = new Typed('.text', {
-    strings:['Student --','Developer --','Resercher --','Freelancer --'],
+    strings:['Student --','Developer --','Resercher --','Coder --'],
     typeSpeed:100,
     backSpeed:100,
     cursorchar:'',
