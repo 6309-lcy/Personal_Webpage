@@ -12,3 +12,10 @@ var typed2 = new Typed('.self_text', {
     cursorchar:'',
     loop:true
 });
+
+let bar = document.querySelector('.bars');
+let side_bar = document.querySelector(".side_bar");
+
+bar.addEventListener('click',()=>{
+    side_bar.classList.toggle("show_side_bar");
+});
