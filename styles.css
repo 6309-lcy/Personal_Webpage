@@ -521,7 +521,7 @@ section{
     height: 20px;
     background-color: tomato;
     top:0;
-    left:-3%;
+    left:-3.5%;
     position: absolute;
     border-radius: 100%;
     border: 2px solid white;
@@ -809,7 +809,17 @@ section{
         height:100vh;
     }
     .container{
-        width:100vw;
+        display: flex;
+        /* justify-content: flex-start;
+        align-items: flex-start; */
+        justify-content: center;
+        align-items: flex;
+        margin-left: 5%;
+        margin-right:5%;
+        width: 100vw;
+        height: auto;
+        min-height: 100vh;
+        position:relative;
     }
     .show_side_bar{
         opacity: 1;
@@ -849,7 +859,17 @@ section{
         left:0;
     }
     .container{
-        width:100vw;
+        display: flex;
+        /* justify-content: flex-start;
+        align-items: flex-start; */
+        justify-content: center;
+        align-items: flex;
+        margin-left: 5%;
+        margin-right:5%;
+        width: 95vw;
+        height: auto;
+        min-height: 100vh;
+        position:relative;
     }
 }
 @media (max-width:1000px){
@@ -875,6 +895,19 @@ section{
     }
     .education_card{
         padding-left: 10%;
+    }
+    .container{
+        display: flex;
+        /* justify-content: flex-start;
+        align-items: flex-start; */
+        justify-content: center;
+        align-items: flex;
+        margin-left: 5%;
+        margin-right:5%;
+        width: 90vw;
+        height: auto;
+        min-height: 100vh;
+        position:relative;
     }
 
 }
@@ -905,6 +938,19 @@ section{
     .contact_container{
         flex-direction: column;
     }
+    .container{
+        display: flex;
+        /* justify-content: flex-start;
+        align-items: flex-start; */
+        justify-content: center;
+        align-items: flex;
+        margin-left: 5%;
+        margin-right:5%;
+        width: 90vw;
+        height: auto;
+        min-height: 100vh;
+        position:relative;
+    }
 }
 
 @media (max-width:500px) {
@@ -923,9 +969,12 @@ section{
         margin-right: 5%;
         min-height: 100vh;
         height: auto; /* Allow auto height for content flow */
-        justify-content: flex-start; /* Align to top for better scrolling */
-        align-items: flex-start; /* Fix invalid 'flex' value */
+        justify-content: center;
+        align-items: flex; /* Fix invalid 'flex' value */
+        position:relative;
+
     }
+
 
     .side_bar {
         width: 40%; /* Increase to 80% for better usability on tiny screens (65% might be too narrow for touch) */
