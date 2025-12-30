@@ -809,7 +809,17 @@ section{
         height:100vh;
     }
     .container{
-        width:100vw;
+        display: flex;
+        /* justify-content: flex-start;
+        align-items: flex-start; */
+        justify-content: center;
+        align-items: flex;
+        margin-left: 5%;
+        margin-right:5%;
+        width: 80vw;
+        height: auto;
+        min-height: 100vh;
+        position:relative;
     }
     .show_side_bar{
         opacity: 1;
