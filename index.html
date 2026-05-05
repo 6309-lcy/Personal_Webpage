@@ -1,1108 +1,557 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anson Lam — Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --card: #16161f;
-      --border: rgba(255,255,255,0.07);
-      --accent: #c8f060;
-      --accent2: #60c8f0;
-      --text: #e8e8f0;
-      --muted: #6b6b7e;
-      --tag-bg: rgba(200, 240, 96, 0.08);
-      --tag-color: #c8f060;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ─── NOISE OVERLAY ─── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 48px;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--accent);
-      letter-spacing: -0.5px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--accent); }
-
-    /* ─── HERO ─── */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 120px 48px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(200,240,96,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,240,96,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    .hero-glow {
-      position: absolute;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,240,96,0.06) 0%, transparent 70%);
-      top: -100px; right: -100px;
-      pointer-events: none;
-    }
-
-    .hero-content { position: relative; max-width: 900px; }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 24px;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 24px; height: 1px;
-      background: var(--accent);
-    }
-
-    h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(52px, 8vw, 96px);
-      line-height: 1.0;
-      letter-spacing: -2px;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(14px, 2vw, 18px);
-      color: var(--muted);
-      margin-bottom: 40px;
-      max-width: 560px;
-      font-weight: 400;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 28px;
-      border-radius: 2px;
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #0a0a0f;
-      font-weight: 500;
-    }
-
-    .btn-primary:hover {
-      background: #d4f570;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(200,240,96,0.25);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 48px;
-      margin-top: 72px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .stat-num {
-      font-family: 'Instrument Serif', serif;
-      font-size: 40px;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 4px;
-    }
-
-    /* ─── SECTIONS ─── */
-    section {
-      padding: 96px 48px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 56px;
-    }
-
-    .section-num {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.2em;
-    }
-
-    h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.5px;
-    }
-
-    h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    /* ─── SKILLS ─── */
-    #about { background: var(--surface); }
-
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 48px;
-    }
-
-    .skill-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      font-size: 12px;
-      color: var(--text);
-      transition: border-color 0.2s;
-    }
-
-    .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-    }
-
-    .info-row {
-      display: flex;
-      gap: 16px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-
-    .info-key {
-      color: var(--muted);
-      min-width: 140px;
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-    }
-
-    .info-val { color: var(--text); }
-
-    /* ─── TIMELINE ─── */
-    .timeline { position: relative; }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 32px;
-      margin-bottom: 48px;
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: 215px;
-      top: 8px;
-      bottom: -40px;
-      width: 1px;
-      background: var(--border);
-    }
-
-    .timeline-item:last-child::before { display: none; }
-
-    .timeline-date {
-      font-size: 12px;
-      color: var(--muted);
-      padding-top: 4px;
-      text-align: right;
-    }
-
-    .timeline-dot {
-      position: absolute;
-      left: 210px;
-      top: 6px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .timeline-body { padding-left: 16px; }
-
-    .timeline-company {
-      font-size: 12px;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 4px;
-    }
-
-    .timeline-body h3 { margin-bottom: 8px; }
-
-    .timeline-body p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    /* ─── PROJECTS ─── */
-    #projects { background: var(--surface); }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 24px;
-    }
-
-    .project-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(200,240,96,0.3);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-    }
-
-    .project-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: linear-gradient(135deg, #1a1a28, #0f0f1a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-img-placeholder {
-      width: 100%;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      background: linear-gradient(135deg, #13131e 0%, #1c1c2e 100%);
-      position: relative;
-    }
-
-    .project-img-placeholder::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, var(--card));
-    }
-
-    .project-body { padding: 24px; }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .tag {
-      background: var(--tag-bg);
-      color: var(--tag-color);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 2px;
-    }
-
-    .tag.blue {
-      background: rgba(96,200,240,0.08);
-      color: var(--accent2);
-    }
-
-    .project-body h3 { margin-bottom: 8px; }
-
-    .project-body p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--accent);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-    }
-
-    .project-link::after {
-      content: '→';
-      transition: transform 0.2s;
-    }
-
-    .project-card:hover .project-link::after { transform: translateX(4px); }
-
-    /* ─── ANALYSIS (PDF) SECTION ─── */
-    #analysis { }
-
-    .analysis-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .analysis-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      transition: border-color 0.3s, transform 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .analysis-card:hover {
-      border-color: rgba(96,200,240,0.4);
-      transform: translateY(-3px);
-    }
-
-    .pdf-icon {
-      width: 44px; height: 44px;
-      background: rgba(96,200,240,0.1);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .analysis-meta {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .analysis-card h3 {
-      font-size: 16px;
-      margin: 0;
-    }
-
-    .analysis-card p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
-      flex: 1;
-    }
-
-    .analysis-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .analysis-view {
-      color: var(--accent2);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .analysis-view::after { content: '↗'; }
-
-    /* ─── CONTACT ─── */
-    #contact {
-      background: var(--surface);
-      text-align: center;
-    }
-
-    .contact-inner {
-      max-width: 560px;
-      margin: 0 auto;
-    }
-
-    .contact-inner h2 { margin-bottom: 16px; }
-
-    .contact-inner p {
-      color: var(--muted);
-      margin-bottom: 40px;
-      font-size: 14px;
-    }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      padding: 24px 48px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .fade-up {
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards;
-    }
-
-    .hero-content > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
-    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
-    .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
-    .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
-    .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
-    .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
-      section { padding: 64px 24px; }
-      #home { padding: 100px 24px 60px; }
-      .about-grid { grid-template-columns: 1fr; }
-      .timeline-item { grid-template-columns: 1fr; }
-      .timeline-item::before, .timeline-dot { display: none; }
-      .timeline-date { text-align: left; }
-      .hero-stats { gap: 32px; flex-wrap: wrap; }
-      footer { flex-direction: column; gap: 8px; text-align: center; }
-    }
-
-    /* Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-overlay.active { display: flex; }
-
-    .modal {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      max-width: 680px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 32px 32px 0;
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 24px;
-      cursor: pointer;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-    .modal-close:hover { color: var(--text); }
-
-    .modal-body { padding: 24px 32px 32px; }
-
-    .modal-img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 4px;
-      background: #1a1a2e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-
-    .modal-body h3 { font-size: 22px; margin-bottom: 8px; }
-    .modal-body p { color: var(--muted); line-height: 1.8; margin-bottom: 16px; font-size: 13px; }
-
-    .modal-highlights {
-      list-style: none;
-      margin-bottom: 24px;
-    }
-    .modal-highlights li {
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--muted);
-      display: flex;
-      gap: 8px;
-    }
-    .modal-highlights li::before { content: '◦'; color: var(--accent); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lam Cheuk Yin — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f8f8f6;--bg2:#ffffff;--bg3:#f0f0ee;--border:#e4e4e0;
+  --text:#181816;--text2:#52524e;--text3:#a0a09a;
+  --accent:#16a34a;--accent2:#15803d;
+  --tag-bg:#dcfce7;--tag-text:#16a34a;
+  --blue:#0ea5e9;--blue-bg:#e0f2fe;
+  --nav-blur:rgba(248,248,246,0.88);--code:#f0f0ee;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 12px rgba(0,0,0,0.04);
+}
+[data-theme="dark"] {
+  --bg:#111110;--bg2:#1a1a18;--bg3:#222220;--border:#2c2c2a;
+  --text:#ececea;--text2:#94948e;--text3:#525250;
+  --accent:#22c55e;--accent2:#16a34a;
+  --tag-bg:#0c2318;--tag-text:#22c55e;
+  --blue:#38bdf8;--blue-bg:#082032;
+  --nav-blur:rgba(17,17,16,0.88);--code:#222220;
+  --shadow:0 1px 3px rgba(0,0,0,0.3),0 4px 12px rgba(0,0,0,0.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--text);line-height:1.7;font-size:13.5px;transition:background .25s,color .25s;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-blur);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:54px;transition:background .25s,border-color .25s}
+.nav-brand{font-weight:800;font-size:14px;letter-spacing:-.03em;color:var(--text);text-decoration:none}
+.nav-brand span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.tlbl{font-size:10px;letter-spacing:.06em;color:var(--text3)}
+.tbtn{width:38px;height:20px;border-radius:20px;background:var(--border);border:none;cursor:pointer;position:relative;transition:background .25s}
+.tbtn::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;top:3px;left:3px;background:var(--text3);transition:transform .25s,background .25s}
+[data-theme="dark"] .tbtn{background:var(--accent)}
+[data-theme="dark"] .tbtn::after{transform:translateX(18px);background:#fff}
+
+/* HERO */
+#hero{min-height:100vh;padding-top:54px;display:flex;align-items:center;position:relative;overflow:hidden}
+.hdots{position:absolute;inset:0;background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:28px 28px;opacity:.7}
+.hglow{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(22,163,74,.08) 0%,transparent 70%);pointer-events:none}
+[data-theme="dark"] .hglow{background:radial-gradient(circle,rgba(34,197,94,.07) 0%,transparent 70%)}
+.hwrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:5rem 3rem;display:grid;grid-template-columns:1fr 300px;gap:5rem;align-items:center}
+.hstatus{display:inline-flex;align-items:center;gap:7px;background:var(--tag-bg);color:var(--tag-text);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:1.5rem;animation:fadeUp .5s ease both .05s}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hname{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;animation:fadeUp .55s ease both .12s}
+.hname em{color:var(--accent);font-style:normal}
+.hrole{font-size:13px;color:var(--text3);letter-spacing:.02em;margin-top:.6rem;margin-bottom:1.2rem;animation:fadeUp .55s ease both .18s}
+.hdesc{font-size:13.5px;color:var(--text2);line-height:1.9;max-width:500px;animation:fadeUp .55s ease both .24s}
+.hstats{display:flex;gap:2.5rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);animation:fadeUp .55s ease both .3s}
+.hsn{font-size:1.6rem;font-weight:800;color:var(--accent);line-height:1}
+.hsl{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-top:2px}
+.hbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:2rem;animation:fadeUp .55s ease both .36s}
+.bp{background:var(--accent);color:#fff;border:none;padding:9px 20px;border-radius:5px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:background .2s,transform .15s}
+.bp:hover{background:var(--accent2);transform:translateY(-1px)}
+.bo{background:transparent;color:var(--text2);border:1px solid var(--border);padding:9px 20px;border-radius:5px;font-family:inherit;font-size:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:border-color .2s,color .2s,transform .15s}
+.bo:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.hphoto{animation:fadeIn .7s ease both .3s;display:flex;justify-content:center}
+.pframe{width:260px;height:320px;border-radius:10px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
+.pframe img{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* LAYOUT */
+.sw{max-width:1100px;margin:0 auto;padding:4.5rem 3rem}
+.ssep{border-top:1px solid var(--border)}
+.sh{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.snum{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);white-space:nowrap}
+.stitle{font-size:clamp(1.3rem,3vw,1.9rem);font-weight:800;letter-spacing:-.03em}
+.sline{flex:1;height:1px;background:var(--border)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ABOUT */
+.agrid{display:grid;grid-template-columns:1fr 300px;gap:3rem}
+.abio{color:var(--text2);line-height:1.95;margin-bottom:1rem}
+.abio strong{color:var(--text)}
+.sc-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tg{background:var(--tag-bg);color:var(--tag-text);font-size:10px;padding:3px 9px;border-radius:3px}
+.tn{background:var(--bg3);color:var(--text2);font-size:10px;padding:3px 9px;border-radius:3px}
+.tb{background:var(--blue-bg);color:var(--blue);font-size:10px;padding:3px 9px;border-radius:3px}
+.icard{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.2rem;box-shadow:var(--shadow)}
+.ir{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.ir:last-child{border-bottom:none}
+.irk{color:var(--text3);font-size:10px;letter-spacing:.05em;text-transform:uppercase}
+.irv{color:var(--text);font-weight:500}
+.cert{margin-top:1rem;padding:1rem;background:var(--bg3);border-radius:6px}
+.cert-n{font-size:12px;font-weight:600;color:var(--text)}
+.cert-o{font-size:10px;color:var(--text3)}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:1.8rem}
+.tl::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:1px;background:var(--border)}
+.tli{position:relative;margin-bottom:2.2rem;opacity:0;transform:translateX(-8px);transition:opacity .45s ease,transform .45s ease}
+.tli.in{opacity:1;transform:none}
+.tldot{position:absolute;left:-2.25rem;top:7px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--border);transition:border-color .2s}
+.tli:hover .tldot{border-color:var(--accent)}
+.tlp{font-size:10px;color:var(--text3);letter-spacing:.04em;margin-bottom:3px}
+.tlr{font-size:14px;font-weight:700;letter-spacing:-.02em}
+.tlo{font-size:12px;color:var(--accent);font-weight:500;margin-bottom:7px}
+.tlb{font-size:12px;color:var(--text2);line-height:1.85}
+.tlb ul{padding-left:1.1rem}
+.tlb li{margin-bottom:3px}
+
+/* NOTION GALLERY */
+.ng{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--border);gap:1px}
+.nc{background:var(--bg2);cursor:pointer;display:flex;flex-direction:column;transition:background .18s;text-decoration:none;color:inherit}
+.nc:hover{background:var(--bg3)}
+.ncc{height:144px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ncci{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px}
+.nem{font-size:2.2rem}
+.nclbl{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
+.ncb{padding:12px 14px 14px;flex:1}
+.nct{font-size:12px;font-weight:700;line-height:1.4;margin-bottom:5px;letter-spacing:-.01em}
+.ncm{font-size:10px;color:var(--text3);margin-bottom:7px}
+.ncd{font-size:11px;color:var(--text2);line-height:1.7;margin-bottom:9px}
+.nctags{display:flex;flex-wrap:wrap;gap:4px}
+.nctags .tg,.nctags .tn,.nctags .tb{font-size:9px;padding:2px 7px}
+@media(max-width:900px){.ng{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.ng{grid-template-columns:1fr}}
+
+/* MODAL */
+.mo{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.mo.open{opacity:1;pointer-events:all}
+.mb{background:var(--bg2);border:1px solid var(--border);border-radius:10px;max-width:660px;width:100%;max-height:82vh;overflow-y:auto;transform:translateY(16px);transition:transform .2s;box-shadow:0 24px 64px rgba(0,0,0,.18)}
+.mo.open .mb{transform:none}
+.mc{float:right;margin:14px 14px 0 0;background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:5px 10px;cursor:pointer;font-family:inherit;font-size:11px;color:var(--text2);position:sticky;top:0;transition:color .2s}
+.mc:hover{color:var(--text)}
+.mbd{padding:1.5rem 2rem 2rem;clear:both}
+.mtt{font-size:1.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}
+.mmt{font-size:11px;color:var(--text3);margin-bottom:1.2rem}
+.ms{margin-bottom:1.2rem}
+.msh{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:7px}
+.msb{font-size:12px;color:var(--text2);line-height:1.85}
+.msb ul{padding-left:1.1rem}
+.msb li{margin-bottom:5px}
+.msb strong{color:var(--text)}
+
+/* CONTACT */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+.ci h3{font-size:14px;font-weight:700;margin-bottom:.8rem}
+.ci p{font-size:12px;color:var(--text2);line-height:1.9;margin-bottom:1rem}
+.cls{display:flex;flex-direction:column;gap:6px}
+.cl{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2);text-decoration:none;padding:8px 10px;border-radius:6px;transition:background .18s,color .18s}
+.cl:hover{background:var(--bg3);color:var(--accent)}
+.cli{width:30px;height:30px;border-radius:5px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.cfc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.4rem;box-shadow:var(--shadow)}
+.cft{font-size:13px;font-weight:700;margin-bottom:3px}
+.cfs{font-size:11px;color:var(--text3);margin-bottom:1.2rem}
+.fg{margin-bottom:.9rem}
+.fl{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
+.fi,.fsel,.fta{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:7px 11px;font-family:inherit;font-size:12px;color:var(--text);outline:none;transition:border-color .2s;resize:none}
+.fi:focus,.fsel:focus,.fta:focus{border-color:var(--accent)}
+.fsuc{display:none;background:var(--tag-bg);color:var(--accent);border:1px solid var(--accent);border-radius:5px;padding:10px;font-size:11px;text-align:center;margin-top:.8rem}
+.pbox{margin-top:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.4rem}
+.pbt{font-size:12px;font-weight:700;margin-bottom:6px}
+.pbd{font-size:11px;color:var(--text2);line-height:1.85;margin-bottom:1rem}
+.pbs{display:flex;flex-direction:column;gap:7px}
+.pstep{display:flex;align-items:flex-start;gap:9px;font-size:11px;color:var(--text2)}
+.pbn{width:18px;height:18px;border-radius:50%;background:var(--tag-bg);color:var(--tag-text);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+code{background:var(--code);color:var(--accent);padding:1px 5px;border-radius:3px;font-size:10px;font-family:inherit}
+
+footer{border-top:1px solid var(--border);padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--text3);letter-spacing:.04em}
+
+@media(max-width:900px){.hwrap,.agrid,.cgrid{grid-template-columns:1fr}.hphoto{display:none}}
+@media(max-width:640px){nav{padding:0 1.2rem}.nav-links{display:none}.sw{padding:3rem 1.2rem}.hwrap{padding:3rem 1.2rem}footer{padding:1.2rem;flex-direction:column;gap:6px}}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">AL_</div>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#analysis">Analysis</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<nav>
+  <a class="nav-brand" href="#hero">LCY<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#competitions">Competitions</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="tlbl" id="tlbl">Light</span>
+    <button class="tbtn" id="tbtn" aria-label="Toggle dark mode"></button>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section id="home">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-content">
-      <div class="hero-eyebrow">Available for opportunities</div>
-      <h1>Anson<br /><em>Lam</em></h1>
-      <p class="hero-sub">Year 3 student in Computational Finance &amp; Computer Science at CityU HK. Building at the intersection of ML, DL quantitative finance, and data analysis.</p>
-      <div class="hero-actions">
-        <a href="https://drive.google.com/file/d/1EQzd-SBJ0PT8JxVUaOUAYnXu-Pn408Sj/view?usp=drive_link" target="_blank" class="btn btn-primary">Download CV</a>
-        <a href="#contact" class="btn btn-outline">Get in Touch</a>
-        <a href="https://linkedin.com/in/cheuk-yin-lam-374b83337" target="_blank" class="btn btn-outline">LinkedIn</a>
-      </div>
-      <div class="hero-stats">
-        <div>
-          <div class="stat-num">4+</div>
-          <div class="stat-label">Projects Built</div>
-        </div>
-        <div>
-          <div class="stat-num">1</div>
-          <div class="stat-label">Years Experience</div>
-        </div>
-        <div>
-          <div class="stat-num">1</div>
-          <div class="stat-label">Internships</div>
-        </div>
-        <div>
-          <div class="stat-num">Deep Learning and Machine Learning</div>
-          <div class="stat-label">Research Focus</div>
-        </div>
+<section id="hero">
+  <div class="hdots"></div>
+  <div class="hglow"></div>
+  <div class="hwrap">
+    <div>
+      <div class="hstatus"><span class="pulse"></span>Open to internships &amp; opportunities</div>
+      <h1 class="hname">CheukYin<br> <em>LAM</em></h1>
+      <p class="hrole">CS &amp; Computational Finance & Computer Science @ CityU HK · Class of 2028</p>
+      <p class="hdesc">Double-degree student building at the intersection of quantitative finance and Computer Science.</p>
+      <!-- <div class="hstats">
+        <div><div class="hsn">+14.1%</div><div class="hsl">GMC Backtest Return</div></div>
+        <div><div class="hsn">84.2%</div><div class="hsl">P(Beat Benchmark)</div></div>
+        <div><div class="hsn">50%</div><div class="hsl">Data Retrieval Speed↑</div></div>
+      </div> -->
+      <div class="hbtns">
+        <a href="#contact" class="bp">✉ Get in touch</a>
+        <a href="https://github.com/6309-lcy" target="_blank" class="bo">⌥ GitHub</a>
+        <a href="mailto:lcy20050603@gmail.com" class="bo">@ Email</a>
       </div>
     </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-header">
-      <span class="section-num">01 /</span>
-      <h2>About Me</h2>
-    </div>
-
-    <div style="max-width:720px; color:var(--muted); font-size:14px; line-height:1.9; margin-bottom:48px;">
-      Hi, I'm Anson — a student majoring in Computer Science and Computational Finance. I'm passionate about web development, data analysis, and machine learning. Recently I've fallen in love with Brain-Computer Interface (BCI) research and plan to pursue it as my final year project. I enjoy building small projects that sharpen my skills and create real value.
-    </div>
-
-    <div class="skills-grid">
-      <div class="skill-pill"> Python</div>
-      <div class="skill-pill"> scikit-learn</div>
-      <div class="skill-pill"> Pandas</div>
-      <div class="skill-pill"> NumPy</div>
-      <div class="skill-pill"> LSTM / Deep Learning</div>
-      <div class="skill-pill"> HTML / CSS / JS</div>
-      <div class="skill-pill"> LaTeX</div>
-      <div class="skill-pill"> Portfolio Optimization</div>
-      <div class="skill-pill"> Reinforcement Learning</div>
-      <div class="skill-pill"> Random Forest</div>
-    </div>
-
-    <div class="about-grid">
-      <div>
-        <div class="info-row"><span class="info-key">Name</span><span class="info-val">Anson (Cheuk-Yin) Lam</span></div>
-        <div class="info-row"><span class="info-key">Based in</span><span class="info-val">Hong Kong</span></div>
-        <div class="info-row"><span class="info-key">Phone</span><span class="info-val">(+852) 5112 5796</span></div>
-        <div class="info-row"><span class="info-key">Email</span><span class="info-val">lcy20050603@gmail.com</span></div>
-      </div>
-      <div>
-        <div class="info-row"><span class="info-key">Experience</span><span class="info-val">1 Years</span></div>
-        <div class="info-row"><span class="info-key">Research</span><span class="info-val">Deep Learning</span></div>
-        <div class="info-row"><span class="info-key">Languages</span><span class="info-val">English · Cantonese · Mandarin</span></div>
-        <div class="info-row"><span class="info-key">GitHub</span><span class="info-val"><a href="https://github.com/6309-lcy" style="color:var(--accent);text-decoration:none;">6309-lcy</a></span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION & EXPERIENCE -->
-  <section id="experience">
-    <div class="section-header">
-      <span class="section-num">02 /</span>
-      <h2>Education &amp; Experience</h2>
-    </div>
-
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-date">2023 – Present</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-body">
-          <div class="timeline-company">City University of Hong Kong</div>
-          <h3>BSc Computer Science &amp; BSc Computational Finance (Double Degree)</h3>
-          <p>Covering big data analytics, derivatives pricing, portfolio management, and software engineering. Currently Year 3.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-date">Aug – Nov 2025</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-body">
-          <div class="timeline-company"><a href="https://sportopia.io/" target="_blank" style="color:var(--accent2);text-decoration:none;">Sportopia Ltd</a></div>
-          <h3>Data Analyst Intern</h3>
-          <p> Optimized efficiency in retrieving data by 50%, speeding up access through queries and processes. Maintained and integrated data across three databases, ensuring integrity. Assist team in drafting quotations, product catalogs, and agreements with automation pipeline on Lark</p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-date">Aug – Aug 2025</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-body">
-          <div class="timeline-company">JPMorgan Chase &amp; Co.</div>
-          <h3>Quantitative Researcher — Virtual Experience Program</h3>
-          <p>Analyzed loan portfolios to estimate customer default probability, identified key risk factors, and developed a Random Forest model to predict potential defaults.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-header">
-      <span class="section-num">03 /</span>
-      <h2>Dev Projects</h2>
-    </div>
-
-    <div class="projects-grid">
-
-      <!-- Project 1 -->
-      <a class="project-card" href="#" onclick="openModal('modal-lstm'); return false;">
-        <div class="project-img-placeholder"></div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag">Python</span>
-            <span class="tag">LSTM</span>
-            <span class="tag">Deep Learning</span>
-          </div>
-          <h3>Stock Prediction with LSTM</h3>
-          <p>Trained 2 LSTM models with MinMaxScaler (R²: 0.96) and StandardScaler (R²: 0.95) to predict stock prices. Live Streamlit deployment.</p>
-          <span class="project-link">View Live App</span>
-        </div>
-      </a>
-
-      <!-- Project 2 -->
-      <a class="project-card" href="#" onclick="openModal('modal-portfolio'); return false;">
-        <div class="project-img-placeholder"></div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag">Python</span>
-            <span class="tag">Finance</span>
-            <span class="tag">Streamlit</span>
-          </div>
-          <h3>Portfolio Management &amp; Risk Dashboard</h3>
-          <p>Comprehensive web-based tool for managing stock portfolios, analyzing performance, assessing risk, optimizing allocations, and running scenario simulations.</p>
-          <span class="project-link">View Live App</span>
-        </div>
-      </a>
-
-      <!-- Project 3 -->
-      <a class="project-card" href="https://github.com/6309-lcy/Reinforcement_trading" target="_blank">
-        <div class="project-img-placeholder"></div>
-        <div class="project-body">
-          <div class="project-tags">
-            <span class="tag">Python</span>
-            <span class="tag">RL</span>
-            <span class="tag">Trading</span>
-          </div>
-          <h3>Reinforcement Learning Trading</h3>
-          <p>Implemented a reinforcement learning agent for algorithmic trading strategies, trained on historical market data to optimize buy/sell decisions.</p>
-          <span class="project-link">View on GitHub</span>
-        </div>
-      </a>
-      <!-- /-->
-      <!-- Project 4: Plotly Dashboard -->
-        <a class="project-card" href="#" onclick="openModal('modal-delta'); return false;">
-        <div class="project-img-placeholder"></div>
-        <div class="project-body">
-            <div class="project-tags">
-            <span class="tag">Python</span>
-            <span class="tag">Plotly</span>
-            <span class="tag">Data Viz</span>
-            </div>
-            <h3>Interactive Data Dashboard</h3>
-            <p>A live interactive dashboard built with Plotly Dash — featuring dynamic charts, data exploration, and visual analytics. Deployed on Plotly Community Cloud.</p>
-            <span class="project-link">View Live App</span>
-        </div>
-        </a>
-
-    </div>
-  </section>
-
-  <!-- ANALYSIS / PDF PROJECTS -->
-  <section id="analysis">
-    <div class="section-header">
-      <span class="section-num">04 /</span>
-      <h2>Analysis &amp; Reports</h2>
-    </div>
-    <p style="color:var(--muted); max-width:560px; margin-bottom:48px; font-size:13px;">
-      Academic and independent research projects — including quantitative analyses, financial models, and written reports. Click to view or download each PDF.
-    </p>
-
-    <div class="analysis-grid">
-
-      <a class="analysis-card" href="https://drive.google.com/file/d/1_A9DqwKTHKuVEsjyHu3AWwpzkG8YL5O-/view?usp=drive_link" target="_blank">
-        <div class="pdf-icon"></div>
-        <div class="analysis-meta">
-          <span class="tag blue">Quantitative Finance</span>
-          <span class="tag blue">Research</span>
-        </div>
-        <h3>VWAP algorithm  Performance Analysis</h3>
-        <p>Developed and tested a static VWAP algorithm for intraday trading strategies about trading 1 Million shares a day, evaluating its performance against benchmark metrics (VWAP).</p>
-        <div class="analysis-footer">
-          <span>2026 · Self Study</span>
-          <span class="analysis-view">View PDF</span>
-        </div>
-      </a>
-      <a class="analysis-card" href="https://drive.google.com/file/d/1_XEpV3CZGAJZKn0z2jpViPipht5eJYlo/view?usp=drive_link" target="_blank">
-        <div class="pdf-icon"></div>
-        <div class="analysis-meta">
-            <span class="tag blue">Neuroscience</span>
-            <span class="tag blue">Computer Vision</span>
-            <span class="tag blue">CityUHK Research</span>
-        </div>
-        <h3>Predictive Coding Model for Motion Parallax Depth Perception</h3>
-        <p>Research proposal under the CityUHK × Sino Grand Challenges Scholars Program. Proposes a brain-inspired computer vision model that mimics the brain's predictive processing of motion parallax — incorporating sparse error gating, hierarchical approximation, and neural alignment via RSA on fMRI data.</p>
-        <div class="analysis-footer">
-            <span>2026 · CityU HK · Grand Challenges Program</span>
-            <span class="analysis-view">View PDF</span>
-        </div>
-      </a>
-      <a class="analysis-card" href="https://drive.google.com/file/d/1j8fAT-oti7QaWGr0pSFz5VMUA-7ZrjZW/view?usp=sharing" target="_blank">
-        <div class="pdf-icon"></div>
-        <div class="analysis-meta">
-          <span class="tag blue">Business Case Competition</span>
-          <span class="tag blue">Team Work</span>
-        </div>
-        <h3>5-year action or business plan for Li Ning Co Ltd on domestic and global expansion</h3>
-        <p>A proposal for the first round submission to the Kwonloon Chamber of Commerce Elite Development Programme for the New Century Business case competition. Came up with a business plan for Li Ning Co Ltd on expansion. Successfully got into the final round, which was held in Malaysia.</p>
-        <div class="analysis-footer">
-          <span>2025 · KCC</span>
-          <span class="analysis-view">View PDF</span>
-        </div>
-      </a>
-
-      
-
-      <!-- <a class="analysis-card" href="#" target="_blank" onclick="alert('Upload your PDF link here — replace this href with your Google Drive / GitHub PDF link'); return false;">
-        <div class="pdf-icon"></div>
-        <div class="analysis-meta">
-          <span class="tag blue">ML</span>
-          <span class="tag blue">Time Series</span>
-        </div>
-        <h3>LSTM for Stock Price Prediction — Report</h3>
-        <p>Detailed technical write-up on the LSTM stock prediction project — covering data preprocessing, model architecture, hyperparameter tuning, and evaluation metrics.</p>
-        <div class="analysis-footer">
-          <span>2024 · Personal Project</span>
-          <span class="analysis-view">View PDF</span>
-        </div>
-      </a> -->
-
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-inner">
-      <div class="section-header" style="justify-content:center;">
-        <span class="section-num">05 /</span>
-        <h2>Get In Touch</h2>
-      </div>
-      <p>Looking forward to working or collaboration opportunities. Feel free to reach out — I'm always open to new ideas.</p>
-      <div class="contact-links">
-        <a href="mailto:lcy20050603@gmail.com" class="btn btn-primary">✉ Email Me</a>
-        <a href="https://linkedin.com/in/cheuk-yin-lam-374b83337" target="_blank" class="btn btn-outline">LinkedIn</a>
-        <a href="https://github.com/6309-lcy" target="_blank" class="btn btn-outline">GitHub</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <span>© 2025 Anson Lam. Built with intention.</span>
-    <span style="color:var(--accent)">lcy20050603@gmail.com</span>
-  </footer>
-
-  <!-- ─── MODALS ─── -->
-
-  <!-- LSTM Modal -->
-  <div class="modal-overlay" id="modal-lstm" onclick="closeModal(event, 'modal-lstm')">
-    <div class="modal">
-      <div class="modal-header">
-        <div>
-          <div class="project-tags" style="margin-bottom:8px;">
-            <span class="tag">Python</span><span class="tag">LSTM</span><span class="tag">Deep Learning</span>
-          </div>
-          <h3 style="font-family:'Syne',sans-serif; font-size:22px;">Stock Prediction with LSTM</h3>
-        </div>
-        <button class="modal-close" onclick="document.getElementById('modal-lstm').classList.remove('active')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-img"></div>
-        <p>Trained two LSTM (Long Short-Term Memory) neural network models on historical stock data to predict future prices. The project explores the impact of different scaling strategies on model performance.</p>
-        <ul class="modal-highlights">
-          <li>MinMaxScaler model achieved R² score of 0.96</li>
-          <li>StandardScaler model achieved R² score of 0.95</li>
-          <li>Deployed live as an interactive Streamlit app</li>
-          <li>Features custom data ingestion, training pipeline, and visualization</li>
-        </ul>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="https://stock-prediction-by-lstm-ntqvmpntpsyeqvtoqy6uud.streamlit.app" target="_blank" class="btn btn-primary">🚀 Live App</a>
-          <a href="https://github.com/6309-lcy/Stock-Prediction-by-LSTM" target="_blank" class="btn btn-outline">GitHub Repo</a>
-        </div>
+    <div class="hphoto">
+      <div class="pframe">
+        <img src="image\mmm.png" alt="Lam Cheuk Yin" onerror="this.parentNode.innerHTML='<div style=\'width:100%;height:100%;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px\'>📸 Photo</div>'">
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Portfolio Modal -->
-  <div class="modal-overlay" id="modal-portfolio" onclick="closeModal(event, 'modal-portfolio')">
-    <div class="modal">
-      <div class="modal-header">
-        <div>
-          <div class="project-tags" style="margin-bottom:8px;">
-            <span class="tag">Python</span><span class="tag">Finance</span><span class="tag">Streamlit</span>
-          </div>
-          <h3 style="font-family:'Syne',sans-serif; font-size:22px;">Portfolio Management &amp; Risk Dashboard</h3>
-        </div>
-        <button class="modal-close" onclick="document.getElementById('modal-portfolio').classList.remove('active')">✕</button>
+<section id="about" class="ssep">
+<div class="sw reveal">
+  <div class="sh"><span class="snum">01 / About</span><div class="sline"></div><span class="stitle">About me</span></div>
+  <div class="agrid">
+    <div>
+      <p class="abio">Hi — I'm <strong>Lam Cheuk Yin (Anson)</strong>, a Year 3 student pursuing a Double Degree in <strong>Computer Science</strong> and <strong>Computational Finance</strong> at <strong>City University of Hong Kong</strong> (2023–2028).</p>
+      <p class="abio">I work at the intersection of finance and technology, building quantitative strategies, time series models, risk dashboards, and automation pipelines. I've competed in global finance challenges, trained ML models on market data, and shipped interactive web tools used for real analysis.</p>
+      <p class="abio">Beyond quant, I'm drawn to <strong>Neural Network Research</strong>, specifically predictive coding models for motion parallax depth perception, which I'm developing under CityU's Grand Challenges Scholars Program and plan to pursue as my final year project.</p>
+      <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem">
+        <div><div class="sc-lbl">Programming &amp; Tools</div><div class="tags"><span class="tn">Python</span><span class="tn">SQL</span><span class="tn">R</span><span class="tn">VBA</span><span class="tn">Excel (Advanced)</span><span class="tn">Git / GitHub</span><span class="tn">Streamlit</span><span class="tn">Dash / Plotly</span><span class="tn">Bloomberg Terminal</span></div></div>
+        <div><div class="sc-lbl">Finance &amp; Analytics</div><div class="tags"><span class="tg">Monte Carlo</span><span class="tg">MPT / Efficient Frontier</span><span class="tg">VaR / CVaR</span><span class="tg">Delta Hedging</span><span class="tg">DCF / CCA</span><span class="tg">Risk Metrics</span></div></div>
+        <div><div class="sc-lbl">Time Series &amp; ML</div><div class="tags"><span class="tb">GARCH</span><span class="tb">ARIMA / ARMA</span><span class="tb">MS / TAR</span><span class="tb">LSTM</span><span class="tb">Random Forest</span><span class="tb">HMM</span><span class="tb">Reinforcement Learning</span></div></div>
+        <div><div class="sc-lbl">Automation</div><div class="tags"><span class="tn">Process Automation</span><span class="tn">Dashboard Dev</span><span class="tn">AI-Enabled Productivity</span></div></div>
       </div>
-      <div class="modal-body">
-        <div class="modal-img"></div>
-        <p>A comprehensive web-based application for managing stock portfolios. Built with Python and Streamlit, it gives investors a full suite of tools to track, analyze, and optimize their holdings.</p>
-        <ul class="modal-highlights">
-          <li>Real-time portfolio performance tracking and analytics</li>
-          <li>Risk assessment: VaR, volatility, Sharpe ratio</li>
-          <li>Markowitz mean-variance portfolio optimization</li>
-          
-          
-        </ul>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="https://portfoliomanagementandriskdashbroadapplication-wqbbck77j8sms65.streamlit.app/" target="_blank" class="btn btn-primary">🚀 Live App</a>
-          <a href="https://github.com/6309-lcy/Portfolio_Management_and_Risk_dashbroad_Application" target="_blank" class="btn btn-outline">GitHub Repo</a>
-        </div>
+    </div>
+    <div>
+      <div class="icard">
+        <div class="ir"><span class="irk">Name</span><span class="irv">Lam Cheuk Yin (Anson)</span></div>
+        <div class="ir"><span class="irk">University</span><span class="irv">City University of HK</span></div>
+        <div class="ir"><span class="irk">Degree</span><span class="irv">CS + Comp. Finance</span></div>
+        <div class="ir"><span class="irk">Period</span><span class="irv">2023 – 2028</span></div>
+        <div class="ir"><span class="irk">Location</span><span class="irv">Hong Kong</span></div>
+        <div class="ir"><span class="irk">Phone</span><span class="irv">+852 5112 5796</span></div>
+        <div class="ir"><span class="irk">Email</span><span class="irv">lcy20050603@gmail.com</span></div>
+        <div class="ir"><span class="irk">GitHub</span><span class="irv"><a href="https://github.com/6309-lcy" target="_blank" style="color:var(--accent);text-decoration:none">6309-lcy</a></span></div>
+        <div class="ir"><span class="irk">Status</span><span class="irv" style="color:var(--accent)">✦ Open to Roles</span></div>
+      </div>
+      <div class="cert" style="margin-top:1rem">
+        <div class="cert-n">Machine Learning with Python</div>
+        <div class="cert-o">Coursera · Jul – Aug 2025</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">Model evaluation, validation strategies &amp; optimization techniques</div>
       </div>
     </div>
   </div>
+</div>
+</section>
 
-  <!-- Portfolio Modal -->
-  <div class="modal-overlay" id="modal-delta" onclick="closeModal(event, 'modal-delta')">
-    <div class="modal">
-      <div class="modal-header">
-        <div>
-          <div class="project-tags" style="margin-bottom:8px;">
-            <span class="tag">Python</span><span class="tag">Finance</span><span class="tag">Plotly</span>
-          </div>
-          <h3 style="font-family:'Syne',sans-serif; font-size:22px;">Derivative Pricing Techniques Dashboard</h3>
-        </div>
-        <button class="modal-close" onclick="document.getElementById('modal-delta').classList.remove('active')">✕</button>
+<section id="experience" class="ssep">
+<div class="sw reveal">
+  <div class="sh"><span class="snum">02 / Experience</span><div class="sline"></div><span class="stitle">Work experience</span></div>
+  <div class="tl">
+    <div class="tli">
+      <div class="tldot"></div>
+      <div class="tlp">Aug 2025 – Nov 2025 · Internship</div>
+      <div class="tlr">Data Analyst Intern</div>
+      <div class="tlo">Sportopia Ltd · Hong Kong</div>
+      <div class="tlb"><ul>
+        <li>Optimized data retrieval efficiency by <strong>50%</strong>, significantly improving speed and reliability of business operations</li>
+        <li>Maintained data integrity across <strong>three databases</strong> through integration and quality assurance</li>
+        <li>Designed and implemented <strong>automated document generation pipelines using Lark</strong>, reducing manual workload for client-facing quotations and product catalogs</li>
+      </ul></div>
+    </div>
+    <div class="tli">
+      <div class="tldot"></div>
+      <div class="tlp">Aug 2025 · Virtual Experience Program</div>
+      <div class="tlr">Quantitative Researcher</div>
+      <div class="tlo">JPMorgan Chase &amp; Co.</div>
+      <div class="tlb"><ul>
+        <li>Analyzed loan portfolios to estimate customer default probability and identified key risk factors</li>
+        <li>Developed a <strong>Random Forest model</strong> to predict potential loan defaults</li>
+      </ul></div>
+    </div>
+    <div class="tli">
+      <div class="tldot"></div>
+      <div class="tlp">Sep 2023 – Jun 2028 (ongoing)</div>
+      <div class="tlr">Bachelor of Computer Science &amp; Bachelor of Computational Finance (Double Degree)</div>
+      <div class="tlo">City University of Hong Kong</div>
+      <div class="tlb">Focus areas: Quant Finance, Backend Development, Risk Management, Probability &amp; Statistics. Active participant in the <strong>CityU × Sino Grand Challenges Scholars Program</strong>.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="competitions" class="ssep">
+<div class="sw reveal">
+  <div class="sh"><span class="snum">03 / Competitions</span><div class="sline"></div><span class="stitle">Case competitions</span></div>
+  <div class="ng">
+    <div class="nc" onclick="openM('gmc')">
+      <div class="ncc" style="background:linear-gradient(135deg,#0a1f10,#0d2b1a)">
+        <div class="ncci"><div class="nem"></div><div class="nclbl">GMC 2026</div></div>
       </div>
-      <div class="modal-body">
-        <div class="modal-img"></div>
-        <p>An interactive educational web application that visualizes and demonstrates core concepts in option pricing and risk management. Built with Python, Dash, and Plotly, it allows users to explore the Binomial model, Black-Scholes formula, Greeks, and dynamic delta hedging through real-time calculations and charts.</p>
-        <ul class="modal-highlights">
-          <li>Dynamic delta hedging simulation with visualization of hedging error and PnL attribution</li>
-          <li>Interactive parameter controls to adjust option inputs and observe model behavior</li>
-          <li>Educational explanations and visualizations</li>
-          <li>Monte Carlo simulation</li>
-          
-        </ul>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="https://2803796c-7ebe-4de4-bb28-b944f26ed19a.plotly.app/" target="_blank" class="btn btn-primary">🚀 Live App</a>
-          <!-- <a href="https://github.com/6309-lcy/Portfolio_Management_and_Risk_dashbroad_Application" target="_blank" class="btn btn-outline">GitHub Repo</a> -->
-        </div>
+      <div class="ncb">
+        <div class="nct">Citi Global Markets Challenge 2026</div>
+        <div class="ncm">Apr – May 2026 · FMAA · Remote</div>
+        <div class="ncd">Long-short macro-quant strategy. +14.14% backtest return vs +5.13% benchmark. Sharpe 2.517. 84.2% P(outperform) across 10,000-path Monte Carlo forecast.</div>
+        <div class="nctags"><span class="tg">MPT</span><span class="tg">Monte Carlo</span><span class="tg">HMM</span><span class="tn">Python</span></div>
+      </div>
+    </div>
+    <div class="nc" onclick="openM('kcc')">
+      <div class="ncc" style="background:linear-gradient(135deg,#1a0f00,#2b1800)">
+        <div class="ncci"><div class="nem"></div><div class="nclbl">KCC 2025</div></div>
+      </div>
+      <div class="ncb">
+        <div class="nct">KCC Elite Development Programme — Business Case</div>
+        <div class="ncm">2025 · Kowloon Chamber of Commerce · Final Round (Malaysia)</div>
+        <div class="ncd">5-year action plan for Li Ning Co. Ltd on domestic and global expansion. Advanced to final round held in Malaysia.</div>
+        <div class="nctags"><span class="tb">Strategy</span><span class="tb">Business Plan</span><span class="tn">Li Ning</span></div>
       </div>
     </div>
   </div>
+</div>
+</section>
 
-  <script>
-    function openModal(id) {
-      document.getElementById(id).classList.add('active');
-      document.body.style.overflow = 'hidden';
+<section id="projects" class="ssep">
+<div class="sw reveal">
+  <div class="sh"><span class="snum">04 / Projects</span><div class="sline"></div><span class="stitle">Projects</span></div>
+  <div class="ng">
+    <div class="nc" onclick="openM('vwap')">
+      <div class="ncc" style="background:linear-gradient(135deg,#001a1a,#002b2b)">
+        <div class="ncci"><div class="nem"></div><div class="nclbl">Research · 2026</div></div>
+      </div>
+      <div class="ncb">
+        <div class="nct">VWAP Algorithm Performance Analysis</div>
+        <div class="ncm">2026 · Self Study · PDF Report</div>
+        <div class="ncd">Developed and tested a static VWAP algorithm for intraday trading of 1 million shares/day. Evaluated execution quality vs VWAP benchmark.</div>
+        <div class="nctags"><span class="tg">VWAP</span><span class="tg">Algo Trading</span><span class="tn">Research</span></div>
+      </div>
+    </div>
+    <div class="nc" onclick="openM('delta')">
+      <div class="ncc" style="background:linear-gradient(135deg,#0a1020,#101830)">
+        <div class="ncci"><div class="nem" style="font-family:serif"></div><div class="nclbl">Options · Mar 2026</div></div>
+      </div>
+      <div class="ncb">
+        <div class="nct">Dynamic Delta Hedging Simulator</div>
+        <div class="ncm">Mar 2026 · Interactive Web App</div>
+        <div class="ncd">Simulator for dynamic delta-hedging of short European call/put options. 500 MC paths, 95% VaR, full P&amp;L attribution breakdown at discrete time steps.</div>
+        <div class="nctags"><span class="tg">Options</span><span class="tg">VaR</span><span class="tn">Python</span><span class="tn">Streamlit</span></div>
+      </div>
+    </div>
+    <div class="nc" onclick="openM('port')">
+      <div class="ncc" style="background:linear-gradient(135deg,#0a1a12,#0d2b1e)">
+        <div class="ncci"><div class="nem"></div><div class="nclbl">Dashboard · Jul 2025</div></div>
+      </div>
+      <div class="ncb">
+        <div class="nct">Portfolio Management &amp; Risk Dashboard</div>
+        <div class="ncm">Jul 2025 · Streamlit / Dash App</div>
+        <div class="ncd">Real-time portfolio tracking via Yahoo Finance. VaR, CVaR, beta, Sharpe, stress testing, Monte Carlo simulations. MPT optimization built-in.</div>
+        <div class="nctags"><span class="tg">MPT</span><span class="tg">Risk</span><span class="tn">Python</span><span class="tn">Streamlit</span></div>
+      </div>
+    </div>
+    <div class="nc" onclick="openM('lstm')">
+      <div class="ncc" style="background:linear-gradient(135deg,#10001a,#1a0030)">
+        <div class="ncci"><div class="nem"></div><div class="nclbl">Deep Learning</div></div>
+      </div>
+      <div class="ncb">
+        <div class="nct">Stock Prediction with LSTM</div>
+        <div class="ncm">2024 · Live Streamlit Deployment</div>
+        <div class="ncd">Two LSTM models: MinMaxScaler (R²: 0.96) and StandardScaler (R²: 0.95) for stock price prediction. Deployed as live interactive app.</div>
+        <div class="nctags"><span class="tb">LSTM</span><span class="tb">Deep Learning</span><span class="tn">Python</span><span class="tn">Streamlit</span></div>
+      </div>
+    </div>
+    <div class="nc" onclick="openM('rl')">
+      <div class="ncc" style="background:linear-gradient(135deg,#1a0a00,#2b1500)">
+        <div class="ncci"><div class="nem"></div><div class="nclbl">RL Trading</div></div>
+      </div>
+      <div class="ncb">
+        <div class="nct">Reinforcement Learning Trading Agent</div>
+        <div class="ncm">2024 · github.com/6309-lcy</div>
+        <div class="ncd">RL agent trained on historical market data to optimize buy/sell/hold decisions. Custom Gym environment with reward shaping and transaction cost simulation.</div>
+        <div class="nctags"><span class="tb">RL</span><span class="tn">Python</span><span class="tn">GitHub</span></div>
+      </div>
+    </div>
+
+    <div class="nc" onclick="openM('bci')">
+      <div class="ncc" style="background:linear-gradient(135deg,#0a0020,#14003a)">
+        <div class="ncci"><div class="nem"></div><div class="nclbl">CityU Grand Challenges</div></div>
+      </div>
+      <div class="ncb">
+        <div class="nct">Predictive Coding Model for Motion Parallax</div>
+        <div class="ncm">2026 · CityU × Sino Grand Challenges Scholars Program</div>
+        <div class="ncd">Brain-inspired CV model for depth perception via motion parallax. Sparse error gating, hierarchical approximation, neural alignment via RSA on fMRI data.</div>
+        <div class="nctags"><span class="tb">BCI</span><span class="tb">Neuroscience</span><span class="tb">Computer Vision</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="contact" class="ssep">
+<div class="sw reveal">
+  <div class="sh"><span class="snum">05 / Contact</span><div class="sline"></div><span class="stitle">Get in touch</span></div>
+  <div class="cgrid">
+    <div>
+      <div class="ci">
+        <h3>Let's connect</h3>
+        <p>Open to quant finance internships, research collaboration, or just talking markets &amp; ML.</p>
+        <div class="cls">
+          <a class="cl" href="mailto:lcy20050603@gmail.com"><div class="cli">@</div>lcy20050603@gmail.com</a>
+          <a class="cl" href="https://github.com/6309-lcy" target="_blank"><div class="cli">⌥</div>github.com/6309-lcy</a>
+          <a class="cl" href="https://linkedin.com/in/cheuk-yin-lam-374b83337" target="_blank"><div class="cli">in</div>linkedin.com/in/cheuk-yin-lam-374b83337</a>
+          <a class="cl" href="tel:+85251125796"><div class="cli"></div>+852 5112 5796</a>
+        </div>
+      </div>
+      <!-- <div class="pbox">
+        <div class="pbt">⚙️ CV Auto-Delivery Pipeline (Free Setup)</div>
+        <div class="pbd">When someone requests your CV, it's automatically emailed to them within ~30s. Zero cost. Here's how:</div>
+        <div class="pbs">
+          <div class="pstep"><div class="pbn">1</div><div>Sign up at <strong>formspree.io</strong> (free tier), create a form, replace <code>YOUR_FORM_ID</code> in the HTML below</div></div>
+          <div class="pstep"><div class="pbn">2</div><div><strong>Zapier</strong> (free): New Formspree submission → filter <code>subject = "cv"</code> → POST to GitHub API <code>/repos/6309-lcy/Personal_Webpage/dispatches</code> with requester email in payload</div></div>
+          <div class="pstep"><div class="pbn">3</div><div>Add <code>GMAIL_USER</code> and <code>GMAIL_APP_PASSWORD</code> in GitHub → Settings → Secrets → Actions</div></div>
+          <div class="pstep"><div class="pbn">4</div><div>Create <code>.github/workflows/send-cv.yml</code> using <code>dawidd6/action-send-mail</code> — reads requester email from dispatch payload, attaches CV.pdf</div></div>
+          <div class="pstep"><div class="pbn">5</div><div>Push everything to main. Enable GitHub Pages (Settings → Pages → main / root). Live!</div></div>
+        </div>
+      </div> -->
+    </div>
+    <!-- <div class="cfc">
+      <div class="cft">Send a message / Request CV</div>
+      <div class="cfs">I'll respond within 24–48 hours.</div>
+      <form id="cform" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="fg"><label class="fl" for="cn">Name</label><input class="fi" type="text" id="cn" name="name" placeholder="Your name" required></div>
+        <div class="fg"><label class="fl" for="ce">Email</label><input class="fi" type="email" id="ce" name="email" placeholder="your@email.com" required></div>
+        <div class="fg">
+          <label class="fl" for="cs">Purpose</label>
+          <select class="fsel" id="cs" name="subject">
+            <option value="cv">📄 Request CV / Résumé</option>
+            <option value="job">💼 Job / Internship Opportunity</option>
+            <option value="collab">🤝 Research / Project Collaboration</option>
+            <option value="general">General Inquiry</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl" for="cm">Message</label><textarea class="fta" id="cm" name="message" rows="4" placeholder="Tell me what you're looking for..."></textarea></div>
+        <input type="hidden" name="_subject" value="Portfolio Contact: New message from LCY site">
+        <button type="submit" class="bp" style="width:100%;justify-content:center">Send →</button>
+        <div class="fsuc" id="fsuc">✓ Sent! If you requested a CV, check your inbox shortly.</div>
+      </form>
+    </div> -->
+  </div>
+</div>
+</section>
+
+<footer>
+  <span>© 2026 Lam Cheuk Yin · City University of Hong Kong</span>
+  <span style="color:var(--accent)">lcy20050603@gmail.com</span>
+</footer>
+
+<!-- MODAL -->
+<div class="mo" id="mo" onclick="cM(event)">
+  <div class="mb" id="mb">
+    <button class="mc" onclick="cMD()">✕ Close</button>
+    <div id="mi" class="mbd"></div>
+  </div>
+</div>
+
+<script>
+// THEME
+const html=document.documentElement,tbtn=document.getElementById('tbtn'),tlbl=document.getElementById('tlbl');
+const sv=localStorage.getItem('lcy_theme')||'light';
+html.setAttribute('data-theme',sv);tlbl.textContent=sv==='dark'?'Dark':'Light';
+tbtn.addEventListener('click',()=>{
+  const n=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',n);tlbl.textContent=n==='dark'?'Dark':'Light';
+  localStorage.setItem('lcy_theme',n);
+});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.tli').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),i*100));
     }
+  });
+},{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-    function closeModal(event, id) {
-      if (event.target === event.currentTarget) {
-        document.getElementById(id).classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
+// MODAL DATA
+const MD={
+  gmc:{t:'Citi Global Markets Challenge 2026',m:'Financial Management Association of Australia · Remote · Apr – May 2026',s:[
+    {h:'Overview',b:'<p>A macro-quant long-short portfolio strategy built on the thesis that markets systematically misprice sanction impacts in the short term. Used the 2022 Russia–Ukraine sanction playbook as a historical dataset, then applied it forward-looking to the US–Iran geopolitical environment.</p>'},
+    {h:'Methodology',b:'<ul><li>Collected all major Russia–Ukraine sanction dates (7 events); computed <strong>2-day Cumulative Abnormal Returns (CAR)</strong> for 200+ assets</li><li>Averaged CARs across events to identify Top-20 winners &amp; Worst-20 losers as the focus universe</li><li>Applied <strong>MPT with Ledoit-Wolf shrunk covariance</strong>; maximized Sharpe with ≥5% min weight constraint (long-short allowed)</li><li>10,000-path <strong>Monte Carlo forecast</strong> (GBM + stochastic sanction shock terms)</li><li>Regime rebalancing via <strong>two Hidden Markov Models</strong> on Oil &amp; Gas signals</li></ul>'},
+    {h:'Results',b:'<ul><li>Backtest (Jan 28 – Apr 28, 2026): <strong>+14.14% total return</strong> vs benchmark +5.13%</li><li>Annualized return: <strong>67.00%</strong> vs 21.40%; Sharpe: <strong>2.517</strong> vs 2.017</li><li>MC Forecast (May–Jul 2026): <strong>84.2% probability of outperforming benchmark</strong></li><li>Max Drawdown: -7.72% (higher alpha, higher vol strategy)</li></ul>'},
+    {h:'Stack',b:'<p>Python · pandas · numpy · PyPortfolioOpt · hmmlearn · scipy · matplotlib</p>'}
+  ]},
+  kcc:{t:'KCC Elite Development Programme — Business Case',m:'Kowloon Chamber of Commerce · 2025 · Final Round in Malaysia',s:[
+    {h:'Overview',b:'<p>First-round submission to the Kowloon Chamber of Commerce Elite Development Programme for the New Century Business Case Competition. Developed a comprehensive <strong>5-year action plan for Li Ning Co. Ltd</strong> covering domestic consolidation and international expansion.</p>'},
+    {h:'Key Deliverables',b:'<ul><li>5-year strategic roadmap for Li Ning domestic and global expansion</li><li>Competitive positioning vs Nike, Adidas in target markets</li><li>Market entry analysis and brand strategy for overseas regions</li><li>Financial projections and risk assessment framework</li><li>Successfully <strong>advanced to the final round held in Malaysia</strong></li></ul>'}
+  ]},
+  delta:{t:'Dynamic Delta Hedging Simulator',m:'Mar 2026 · Interactive Web App',s:[
+    {h:'Overview',b:'<p>An interactive web-based simulator demonstrating dynamic delta-hedging of short European call and put options at discrete time steps — visualizing the practical challenges of discrete vs continuous replication.</p>'},
+    {h:'Features',b:'<ul><li>500 Monte Carlo simulations to visualize hedging error distribution</li><li>95% <strong>VaR calculation</strong> on hedging P&amp;L</li><li>Comprehensive <strong>P&amp;L attribution breakdown</strong> (delta PnL, gamma PnL, theta, hedging error)</li><li>Configurable parameters: strike, maturity, volatility, hedge frequency</li></ul>'},
+    {h:'Stack',b:'<p>Python · Streamlit · numpy · scipy · Plotly</p>'}
+  ]},
+  port:{t:'Portfolio Management & Risk Dashboard',m:'Jul 2025 · Streamlit / Dash App',s:[
+    {h:'Overview',b:'<p>A comprehensive interactive dashboard for real-time portfolio tracking, risk assessment, and optimization. Integrates live market data via Yahoo Finance API.</p>'},
+    {h:'Capabilities',b:'<ul><li>Real-time NAV tracking with live Yahoo Finance data</li><li>Risk metrics: <strong>VaR, CVaR, beta, Sharpe ratio</strong></li><li>Portfolio optimization using <strong>Modern Portfolio Theory (MPT)</strong></li><li>Stress testing across historical crisis scenarios</li><li>Monte Carlo simulations for return distribution forecasting</li><li>Efficient frontier visualization</li></ul>'},
+    {h:'Stack',b:'<p>Python · Streamlit / Dash · yfinance · PyPortfolioOpt · Plotly · pandas · numpy</p>'}
+  ]},
+  lstm:{t:'Stock Prediction with LSTM',m:'2024 · Deep Learning · Live Streamlit Deployment',s:[
+    {h:'Overview',b:'<p>Trained two LSTM (Long Short-Term Memory) models for stock price prediction — comparing MinMaxScaler vs StandardScaler normalization on model performance.</p>'},
+    {h:'Results',b:'<ul><li>MinMaxScaler model: <strong>R² = 0.96</strong></li><li>StandardScaler model: <strong>R² = 0.95</strong></li><li>Deployed as a live Streamlit app with configurable ticker input</li></ul>'},
+    {h:'Stack',b:'<p>Python · TensorFlow / Keras · pandas · numpy · scikit-learn · Streamlit · yfinance</p>'}
+  ]},
+  rl:{t:'Reinforcement Learning Trading Agent',m:'2024 · github.com/6309-lcy/Reinforcement_trading',s:[
+    {h:'Overview',b:'<p>An RL agent trained to make algorithmic trading decisions (buy / hold / sell) on historical market data. Custom environment simulates realistic market mechanics including transaction costs.</p>'},
+    {h:'Approach',b:'<ul><li>Custom OpenAI Gym-compatible trading environment</li><li>Reward shaping based on realized portfolio returns</li><li>Trained on historical OHLCV data with engineered features</li><li>Evaluated against buy-and-hold and moving average baselines</li></ul>'},
+    {h:'Stack',b:'<p>Python · Gymnasium · pandas · numpy · matplotlib</p>'}
+  ]},
+  vwap:{t:'VWAP Algorithm Performance Analysis',m:'2026 · Self-Study Research · PDF Report',s:[
+    {h:'Overview',b:'<p>Developed and tested a static VWAP (Volume Weighted Average Price) execution algorithm for intraday trading — specifically modelled for trading <strong>1 million shares per day</strong>. Evaluated execution quality against the VWAP benchmark.</p>'},
+    {h:'Analysis Scope',b:'<ul><li>Static VWAP schedule based on historical intraday volume profiles</li><li>Slippage analysis and implementation shortfall vs VWAP</li><li>Performance across different intraday market conditions</li></ul>'}
+  ]},
+  bci:{t:'Predictive Coding Model for Motion Parallax Depth Perception',m:'2026 · CityU × Sino Grand Challenges Scholars Program',s:[
+    {h:'Overview',b:'<p>Research proposal submitted under the CityU HK × Sino Grand Challenges Scholars Program. Proposes a <strong>brain-inspired computer vision model</strong> that mimics the brain\'s predictive processing of motion parallax for depth perception.</p>'},
+    {h:'Key Components',b:'<ul><li><strong>Sparse error gating:</strong> Propagates only prediction errors above a learned threshold — mimicking cortical layer 2/3 surprise signals</li><li><strong>Hierarchical approximation:</strong> Multi-level predictive hierarchy with top-down priors and bottom-up error correction</li><li><strong>Neural alignment via RSA:</strong> Representational Similarity Analysis on fMRI data to validate model representations match human brain activity</li></ul>'},
+    {h:'Relevance',b:'<p>Bridges computational neuroscience and computer vision. Applications in robotics, autonomous navigation, and BCIs. Planned as my <strong>Final Year Project</strong>.</p>'}
+  ]}
+};
 
-    // Scroll-triggered fade-in
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
+function openM(id){
+  const d=MD[id];if(!d)return;
+  let h=`<div class="mtt">${d.t}</div><div class="mmt">${d.m}</div>`;
+  d.s.forEach(s=>{h+=`<div class="ms"><div class="msh">${s.h}</div><div class="msb">${s.b}</div></div>`;});
+  document.getElementById('mi').innerHTML=h;
+  document.getElementById('mo').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function cM(e){if(e.target===document.getElementById('mo'))cMD();}
+function cMD(){document.getElementById('mo').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cMD();});
 
-    document.querySelectorAll('.project-card, .analysis-card, .timeline-item').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      observer.observe(el);
-    });
-  </script>
+// FORM
+document.getElementById('cform').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=this.querySelector('button[type=submit]');
+  btn.textContent='Sending...';btn.disabled=true;
+  try{
+    const r=await fetch(this.action,{method:'POST',body:new FormData(this),headers:{Accept:'application/json'}});
+    if(r.ok){document.getElementById('fsuc').style.display='block';this.reset();btn.textContent='✓ Sent!';}
+    else{btn.textContent='Error — email me directly';btn.disabled=false;}
+  }catch{btn.textContent='Error — email me directly';btn.disabled=false;}
+});
+</script>
 </body>
 </html>
