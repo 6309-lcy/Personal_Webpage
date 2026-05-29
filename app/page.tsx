@@ -38,7 +38,7 @@ export default function Home() {
             <div className="md:col-span-5">
               <div className="relative aspect-[4/3] md:aspect-auto md:h-[420px] rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--bg-3)]">
                 <img 
-                  src="/cheukyin-lam.jpg" 
+                  src="/cheukyin-lam.png" 
                   alt="CheukYin LAM" 
                   className="absolute inset-0 w-full h-full object-cover"
                 />
