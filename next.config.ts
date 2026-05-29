@@ -6,10 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,                 // Required for static export
   },
-  // If deploying to https://username.github.io/repo-name/
-  // Uncomment and set the correct base path:
-  // basePath: '/Personal_Webpage',
-  // assetPrefix: '/Personal_Webpage/',
+  // Deploying to https://6309-lcy.github.io/Personal_Webpage/
+  basePath: '/Personal_Webpage',
+  assetPrefix: '/Personal_Webpage/',
 };
 
 export default nextConfig;
