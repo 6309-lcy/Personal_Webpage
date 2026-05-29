@@ -33,6 +33,13 @@ jobs:
       - name: Build with Next.js
         run: npm run build
 
+      - name: Prepare static files for GitHub Pages
+        run: |
+          # Create 404.html so direct navigation and refreshes work on GitHub Pages
+          cp out/index.html out/404.html
+          # Create .nojekyll to prevent Jekyll processing
+          touch out/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
