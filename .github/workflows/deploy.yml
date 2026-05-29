@@ -40,6 +40,12 @@ jobs:
           # Create .nojekyll to prevent Jekyll processing
           touch out/.nojekyll
 
+          # Add cache buster to the hero image to fight GitHub Pages aggressive CDN caching
+          # This ensures visitors see the latest photo on first visit instead of stale cached version
+          TIMESTAMP=$(date +%s)
+          sed -i "s|cheukyin-lam.png|cheukyin-lam.png?cb=${TIMESTAMP}|g" out/index.html
+          sed -i "s|cheukyin-lam.png|cheukyin-lam.png?cb=${TIMESTAMP}|g" out/404.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
