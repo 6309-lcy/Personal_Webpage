@@ -85,6 +85,34 @@ export default function Home() {
           <div className="uppercase tracking-[0.12em] text-xs text-[var(--text-3)] mb-6">Experience</div>
 
           <div className="space-y-10">
+            <div>
+              <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-x-4 gap-y-1 mb-2">
+                <div className="font-semibold text-[17px]">(Incoming) Quantitative Analyst Intern</div>
+                <div className="text-sm text-[var(--text-3)]">Sep 2026 - Oct 2026</div>
+              </div>
+              <div className="text-[var(--text-2)] mb-3">Caerus Global Management</div>
+              /* {/* <ul className="text-[var(--text-2)] space-y-1.5 text-[15px] pl-1">
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul> */} */
+            </div>
+
+            <div>
+              <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-x-4 gap-y-1 mb-2">
+                <div className="font-semibold text-[17px]">IT Intern (Data Analyst)</div>
+                <div className="text-sm text-[var(--text-3)]">Jun 2026 - Aug 2026</div>
+              </div>
+              <div className="text-[var(--text-2)] mb-3">Q P Printing Limited</div>
+              {/* <ul className="text-[var(--text-2)] space-y-1.5 text-[15px] pl-1">
+                <li>Analyzed loan portfolios to estimate customer default probability and identified key risk factors.</li>
+                <li>Developed a Random Forest model to predict potential loan defaults.</li>
+                <li>Applied statistical and machine learning techniques to real credit risk data.</li>
+              </ul> */}
+            </div>
+
+
+            
             {/* Sportopia */}
             <div>
               <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-x-4 gap-y-1 mb-2">
