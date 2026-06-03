@@ -91,11 +91,7 @@ export default function Home() {
                 <div className="text-sm text-[var(--text-3)]">Sep 2026 - Oct 2026</div>
               </div>
               <div className="text-[var(--text-2)] mb-3">Caerus Global Management</div>
-              /* {/* <ul className="text-[var(--text-2)] space-y-1.5 text-[15px] pl-1">
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul> */} */
+              
             </div>
 
             <div>
@@ -104,11 +100,7 @@ export default function Home() {
                 <div className="text-sm text-[var(--text-3)]">Jun 2026 - Aug 2026</div>
               </div>
               <div className="text-[var(--text-2)] mb-3">Q P Printing Limited</div>
-              {/* <ul className="text-[var(--text-2)] space-y-1.5 text-[15px] pl-1">
-                <li>Analyzed loan portfolios to estimate customer default probability and identified key risk factors.</li>
-                <li>Developed a Random Forest model to predict potential loan defaults.</li>
-                <li>Applied statistical and machine learning techniques to real credit risk data.</li>
-              </ul> */}
+              
             </div>
 
 
