@@ -99,7 +99,7 @@ export default function Home() {
                 <div className="font-semibold text-[17px]">IT Intern (Data Analyst)</div>
                 <div className="text-sm text-[var(--text-3)]">Jun 2026 - Aug 2026</div>
               </div>
-              <div className="text-[var(--text-2)] mb-3">Q P Printing Limited</div>
+              <div className="text-[var(--text-2)] mb-3">QP Group Printing Limited</div>
               
             </div>
 
@@ -295,7 +295,7 @@ export default function Home() {
       </section>
 
       {/* PROOF DOCUMENTS (PDFs only, no CV) */}
-      <section id="proof" className="py-16 md:py-24">
+      {/* <section id="proof" className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-6">
           <div className="uppercase tracking-[0.12em] text-xs text-[var(--text-3)] mb-4">Proof</div>
           <h2 className="mb-8 tracking-[-0.015em]">Supporting documents</h2>
@@ -316,7 +316,7 @@ export default function Home() {
 
           
         </div>
-      </section>
+      </section> */}
 
       {/* FOOTER / CONTACT */}
       <footer className="border-t border-[var(--border)] py-12 text-sm">
